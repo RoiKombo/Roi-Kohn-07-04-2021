@@ -1,8 +1,11 @@
+import Header from './components/Header';
+import WeatherPage from './components/WeatherPage';
 
 function App() {
   return (
     <div className="App">
-      this works
+      <Header />
+      <WeatherPage />
     </div>
   );
 }
