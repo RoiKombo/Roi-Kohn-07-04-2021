@@ -1,5 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
+import { Button } from 'primereact/button';
 
 const NavBar = Styled.div`
     width: 100vw;
@@ -22,8 +23,8 @@ export default function Header() {
     <NavBar>
       <NavTxt>HEROLO weather task</NavTxt>
       <div>
-        <NavBtn type="button">HOME</NavBtn>
-        <NavBtn type="button">FAVORITES</NavBtn>
+        <Button label="HOME" icon="pi pi-home" />
+        <Button label="FAVORITES" icon="pi pi-star-o" />
       </div>
     </NavBar>
   );

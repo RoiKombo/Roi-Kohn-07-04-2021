@@ -1,22 +1,31 @@
 import React from 'react';
 import Styled from 'styled-components';
+import { Button } from 'primereact/button';
+import { connect } from 'react-redux';
 import SearchBar from './SearchBar';
+import FiveDayForecast from './FiveDayForecast';
 
 const Search = Styled.div`
     display: flex;
     justify-content: center;
+    margin: 20px 0;
 `;
-const CityWeather = Styled.div`
+const CustomCard = Styled.div`   
     display: flex;
     flex-direction: column;
-    width: 80%;
-    background-color: peachpuff;
+    width: 80%;background: #ffffff;
+    color: #495057;
+    box-shadow:  3px 3px 17px #e1e1e3, -3px -3px 17px #ffffff;
+    border-radius: 15px;
+    margin: 0 0 30px 10px;
+    padding: 23px;
+    flex-grow: 1;
+    margin: auto;
 `;
 const TopFlex = Styled.div`
     display: flex;
     justify-content: space-between;
-    width: 80%;
-    background-color: peachpuff;
+    align-items: center;   
 `;
 const FavBtn = Styled.button`
      display: flex;
@@ -30,46 +39,40 @@ const CityDetails = Styled.div`
     display: flex;
     justify-content: flex-start;
 `;
-const DailyForeCast = Styled.div`
-    display: flex;
-    align-items: center;
-    width: 100px;
-    height: 100px;
-    background-color: #d5ecc2
-`;
-const Dailys = Styled.div`
-    display: flex;
-    justify-content: space-around;
-`;
+
 const TodayWeather = Styled.h1`
     display: flex;
     justify-content: center;
 `;
 
-export default function WeatherPage() {
-  return (
-    <div>
-      <Search>
-        <SearchBar />
-      </Search>
-      <CityWeather>
-        <TopFlex>
-          <CityDetails>
-            <CityImg />
-            <p>Tel Aviv</p>
-            <p>38c</p>
-          </CityDetails>
-          <FavBtn type="button">Favorite</FavBtn>
-        </TopFlex>
-        <TodayWeather>weatherForecast variable</TodayWeather>
-        <Dailys>
-          <DailyForeCast>38c</DailyForeCast>
-          <DailyForeCast>38c</DailyForeCast>
-          <DailyForeCast>38c</DailyForeCast>
-          <DailyForeCast>38c</DailyForeCast>
-          <DailyForeCast>38c</DailyForeCast>
-        </Dailys>
-      </CityWeather>
-    </div>
-  );
-}
+export const WeatherPage = () => (
+  <div>
+    <Search>
+      <SearchBar />
+    </Search>
+    <CustomCard>
+      <TopFlex>
+        <CityDetails>
+          <CityImg />
+          <p>Tel Aviv</p>
+          <p>38c</p>
+        </CityDetails>
+        <Button
+          icon="pi pi-star-o"
+          className="p-button-rounded p-button-secondary p-button-outlined"
+        />
+        {/* <Button
+            icon="pi pi-star-o"
+            className="p-button-rounded p-button-secondary"
+          /> */}
+      </TopFlex>
+      <TodayWeather>weatherForecast variable</TodayWeather>
+      <FiveDayForecast />
+    </CustomCard>
+  </div>
+);
+
+const mapStateToProps = (state) => ({
+  data: state.data,
+});
+export default connect(mapStateToProps)(WeatherPage);
