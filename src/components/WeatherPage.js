@@ -55,18 +55,19 @@ export const WeatherPage = ({ data }) => {
         <SearchBar />
       </Search>
       <CustomCard>
-        {data.currentConditions.length > 0 && (
+        {data.currentConditions.WeatherText && (
           <div>
-            <div>{data.currentConditions[0].WeatherText}</div>
-            <div>{data.currentConditions[0].Temperature.Metric.Value}°</div>
-            <div>{data.currentConditions[0].Wind.Speed.Metric.Value}</div>
-            <div>{data.currentConditions[0].RelativeHumidity}</div>
+            <div>{data.currentConditions.cityName}</div>
+            <div>{data.currentConditions.WeatherText}</div>
+            <div>{data.currentConditions.Temperature.Metric.Value}°</div>
+            {/* <div>{data.currentConditions.Wind.Speed.Metric.Value}</div>
+            <div>{data.currentConditions.RelativeHumidity}</div> */}
           </div>
         )}
-        {/* <Button
-            icon="pi pi-star-o"
-            className="p-button-rounded p-button-secondary p-button-outlined"
-          /> */}
+        <Button
+          icon="pi pi-star-o"
+          className="p-button-rounded p-button-secondary p-button-outlined"
+        />
         {/* <Button
             icon="pi pi-star-o"
             className="p-button-rounded p-button-secondary"

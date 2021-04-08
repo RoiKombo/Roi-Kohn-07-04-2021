@@ -35,7 +35,8 @@ const SearchBar = ({
     );
     console.log('checkCityName', checkCityName);
     checkCityName.length > 0 && getForecast(checkCityName[0].Key);
-    checkCityName.length > 0 && getCurrent(checkCityName[0].Key);
+    checkCityName.length > 0 &&
+      getCurrent(checkCityName[0].Key, checkCityName[0].LocalizedName);
   }, [inputCity]);
 
   const displayCities = suggestions.map((city) => ({
