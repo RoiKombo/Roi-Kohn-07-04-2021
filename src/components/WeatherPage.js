@@ -1,6 +1,6 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
 import Styled from 'styled-components';
+import SearchBar from './SearchBar';
 
 const Search = Styled.div`
     display: flex;
@@ -50,8 +50,7 @@ export default function WeatherPage() {
   return (
     <div>
       <Search>
-        <input type="text" />
-        <button type="button">SEARCH</button>
+        <SearchBar />
       </Search>
       <CityWeather>
         <TopFlex>
