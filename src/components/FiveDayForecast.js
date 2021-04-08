@@ -8,7 +8,7 @@ const DailyForeCast = Styled.div`
     padding: 1.2rem;
     background-color: #d5ecc2;
     margin: 5px
-    
+
 `;
 const Dailys = Styled.div`
     display: flex;
@@ -21,10 +21,10 @@ const FiveDayForecast = ({ data }) => {
     <Dailys>
       {data?.weeklyForecast?.DailyForecasts?.map((forecast, index) => (
         <DailyForeCast key={index}>
-          {moment(forecast.Date).format('dddd')};
-          <p>{forecast.Day.IconPhrase};</p>
-          <p>{forecast.Temperature.Minimum.Value}°;</p>
-          <p>{forecast.Temperature.Maximum.Value}°;</p>
+          {moment(forecast.Date).format('dddd')}
+          <p>{forecast.Day.IconPhrase}</p>
+          <p>{forecast.Temperature.Minimum.Value}°</p>
+          <p>{forecast.Temperature.Maximum.Value}°</p>
         </DailyForeCast>
       ))}
     </Dailys>

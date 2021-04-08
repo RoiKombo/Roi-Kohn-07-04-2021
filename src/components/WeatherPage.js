@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import Styled from 'styled-components';
 import { Button } from 'primereact/button';
@@ -45,34 +47,38 @@ const TodayWeather = Styled.h1`
     justify-content: center;
 `;
 
-export const WeatherPage = () => (
-  <div>
-    <Search>
-      <SearchBar />
-    </Search>
-    <CustomCard>
-      <TopFlex>
-        <CityDetails>
-          <CityImg />
-          <p>Tel Aviv</p>
-          <p>38c</p>
-        </CityDetails>
-        <Button
-          icon="pi pi-star-o"
-          className="p-button-rounded p-button-secondary p-button-outlined"
-        />
+export const WeatherPage = ({ data }) => {
+  console.log('weatherdata', data);
+  return (
+    <div>
+      <Search>
+        <SearchBar />
+      </Search>
+      <CustomCard>
+        {data.currentConditions.length > 0 && (
+          <div>
+            <div>{data.currentConditions[0].WeatherText}</div>
+            <div>{data.currentConditions[0].Temperature.Metric.Value}°</div>
+            <div>{data.currentConditions[0].Wind.Speed.Metric.Value}</div>
+            <div>{data.currentConditions[0].RelativeHumidity}</div>
+          </div>
+        )}
+        {/* <Button
+            icon="pi pi-star-o"
+            className="p-button-rounded p-button-secondary p-button-outlined"
+          /> */}
         {/* <Button
             icon="pi pi-star-o"
             className="p-button-rounded p-button-secondary"
           /> */}
-      </TopFlex>
-      <TodayWeather>weatherForecast variable</TodayWeather>
-      <FiveDayForecast />
-    </CustomCard>
-  </div>
-);
+        <FiveDayForecast />
+      </CustomCard>
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => ({
   data: state.data,
 });
+
 export default connect(mapStateToProps)(WeatherPage);
