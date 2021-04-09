@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/Roi-Kohn-07-04-2021/static/js/main.6f6a5308.chunk.js",
-    "main.js.map": "/Roi-Kohn-07-04-2021/static/js/main.6f6a5308.chunk.js.map",
+    "main.js": "/Roi-Kohn-07-04-2021/static/js/main.2ed8fdfc.chunk.js",
+    "main.js.map": "/Roi-Kohn-07-04-2021/static/js/main.2ed8fdfc.chunk.js.map",
     "runtime-main.js": "/Roi-Kohn-07-04-2021/static/js/runtime-main.c9086a46.js",
     "runtime-main.js.map": "/Roi-Kohn-07-04-2021/static/js/runtime-main.c9086a46.js.map",
     "static/css/2.b217a4d4.chunk.css": "/Roi-Kohn-07-04-2021/static/css/2.b217a4d4.chunk.css",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.c9086a46.js",
     "static/css/2.b217a4d4.chunk.css",
     "static/js/2.e3cc66eb.chunk.js",
-    "static/js/main.6f6a5308.chunk.js"
+    "static/js/main.2ed8fdfc.chunk.js"
   ]
 }
