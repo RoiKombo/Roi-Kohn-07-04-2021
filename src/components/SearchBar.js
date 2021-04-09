@@ -25,7 +25,8 @@ const SearchBar = ({
   const { suggestions = [] } = data;
 
   const searchCity = () => {
-    inputCity.length > 0 && getCities(inputCity);
+    console.log('inputCity', inputCity);
+    inputCity !== undefined && getCities(inputCity);
   };
 
   useEffect(() => {
@@ -44,23 +45,22 @@ const SearchBar = ({
     value: city.LocalizedName,
   }));
 
-  const checkEnglishInput = ({ value }) => {
-    const englishOnlyRegex = /(^$|^[a-zA-Z ]+$)/;
-    console.log(value);
-    englishOnlyRegex.test(value)
+  const checkEnglishInput = (value) => {
+    const englishRegex = new RegExp(/(^$|^[a-zA-Z ]+$)/);
+    englishRegex.test(value)
       ? setinputCity(value)
       : console.log('search accepts english letters only');
   };
-  //   console.log('suggestions', suggestions);
-  //   console.log('displayCities', displayCities);
+
   return (
     <Search>
       <AutoComplete
         value={inputCity}
         suggestions={displayCities}
         field="value"
-        onChange={(e) => setinputCity(e.value)}
+        onChange={(e) => checkEnglishInput(e.value)}
         completeMethod={searchCity}
+        type="a-z"
       />
     </Search>
   );

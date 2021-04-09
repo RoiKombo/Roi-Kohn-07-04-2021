@@ -19,7 +19,8 @@ export const getAutoComplete = (query) => (dispatch) => {
         type: SUGGESTIONS,
         payload: suggestions,
       })
-    );
+    )
+    .catch((err) => console.log('faild to get autoComplete API'));
 };
 
 export const getWeather = (cityKey) => (dispatch) => {
@@ -34,7 +35,8 @@ export const getWeather = (cityKey) => (dispatch) => {
         type: GET_WEATHER,
         payload: weeklyForecast,
       })
-    );
+    )
+    .catch((err) => console.log('faild to get 5 day foreCast'));
 };
 
 export const getCurrentConditions = (cityKey, name) => (dispatch) => {
@@ -54,7 +56,8 @@ export const getCurrentConditions = (cityKey, name) => (dispatch) => {
           key: cityKey,
         },
       });
-    });
+    })
+    .catch((err) => console.log('faild to get current conditions'));
 };
 
 export const getFavoritesConditions = (favorites) => (dispatch) => {
@@ -66,5 +69,6 @@ export const getFavoritesConditions = (favorites) => (dispatch) => {
         type: FAVORITES_CONDITIONS,
         payload: FavoritesConditions,
       });
-    });
+    })
+    .catch((err) => console.log('faild to get favorite conditions'));
 };
