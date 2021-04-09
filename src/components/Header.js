@@ -1,6 +1,7 @@
 import React from 'react';
 import Styled from 'styled-components';
 import { Button } from 'primereact/button';
+import { Link } from 'react-router-dom';
 
 const NavBar = Styled.div`
     width: 100vw;
@@ -23,8 +24,12 @@ export default function Header() {
     <NavBar>
       <NavTxt>HEROLO weather task</NavTxt>
       <div>
-        <Button label="HOME" icon="pi pi-home" />
-        <Button label="FAVORITES" icon="pi pi-star-o" />
+        <Link to="/">
+          <Button label="HOME" icon="pi pi-home" />
+        </Link>
+        <Link to="/favorites">
+          <Button label="FAVORITES" icon="pi pi-star-o" />
+        </Link>
       </div>
     </NavBar>
   );

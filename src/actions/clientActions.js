@@ -46,6 +46,7 @@ export const getCurrentConditions = (cityKey, name) => (dispatch) => {
         payload: {
           ...currentConditionsPayload,
           cityName: name,
+          key: cityKey,
         },
       });
     });

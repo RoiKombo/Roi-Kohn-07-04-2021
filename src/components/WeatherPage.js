@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
@@ -67,22 +68,41 @@ const WeatherPage = ({
     getCurrent(215854, 'Tel Aviv');
   }, []);
 
-  const makeFavorite = (cityName) => {
-    const indexCity = favorites.indexOf(cityName);
-    console.log('index', indexCity, favorites);
-    if (indexCity > -1) {
+  const makeFavorite = ({ cityName, key }) => {
+    const city =
+      favorites.length > 0
+        ? favorites.filter((item) => {
+            if (item.cityName === cityName) return item;
+          })
+        : [];
+    console.log('index', city, favorites, cityName, key);
+    if (city.length > 0) {
+      // remove favorite city from local storage
       setCityFavorite(false);
-      favorites.splice(indexCity, 1);
-      setFavorites(favorites);
+      const newFav = favorites.reduce((arr, item) => {
+        if (item.cityName !== cityName) {
+          return [...arr, item];
+        }
+        return arr;
+      }, []);
+      setFavorites(newFav);
     } else {
+      // add favorite city to local storage
       setCityFavorite(true);
-      setFavorites([...favorites, cityName]);
+      console.log('set fav', cityName, key);
+      const favs = favorites.length > 0 ? favorites : [];
+      setFavorites([...favs, { cityName, key }]);
     }
   };
-
+  // Make button active / inactive according to local storage favorites
   useEffect(() => {
-    const indexCity = favorites.indexOf(currentCity);
-    indexCity > -1 ? setCityFavorite(true) : setCityFavorite(false);
+    const city =
+      favorites.length > 0
+        ? favorites.filter((item) => {
+            if (item.cityName === currentCity) return item;
+          })
+        : [];
+    city.length > 0 ? setCityFavorite(true) : setCityFavorite(false);
   }, [currentCity]);
   // console.log('data.currentConditions', data.currentConditions);
   return (
@@ -100,7 +120,7 @@ const WeatherPage = ({
         )}
 
         <Button
-          onClick={() => makeFavorite(data.currentConditions.cityName)}
+          onClick={() => makeFavorite(data.currentConditions)}
           icon="pi pi-star-o"
           className={
             !cityFavorite

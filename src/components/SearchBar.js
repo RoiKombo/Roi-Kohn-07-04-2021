@@ -29,7 +29,7 @@ const SearchBar = ({
   };
 
   useEffect(() => {
-    // console.log('inputCity', inputCity);
+    console.log('inputCity', inputCity);
     const checkCityName = suggestions.filter(
       (city) => city.LocalizedName === inputCity.value
     );
