@@ -1,11 +1,15 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
 import { Button } from 'primereact/button';
 import { connect } from 'react-redux';
+
 import SearchBar from './SearchBar';
 import FiveDayForecast from './FiveDayForecast';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { getWeather, getCurrentConditions } from '../actions/clientActions';
 
 const Search = Styled.div`
     display: flex;
@@ -47,31 +51,64 @@ const TodayWeather = Styled.h1`
     justify-content: center;
 `;
 
-export const WeatherPage = ({ data }) => {
-  console.log('weatherdata', data);
+const WeatherPage = ({
+  data,
+  getWeather: getForecast,
+  getCurrentConditions: getCurrent,
+  currentCity,
+}) => {
+  console.log('current', currentCity);
+  const [favorites, setFavorites] = useLocalStorage('favorites', []);
+  const [cityFavorite, setCityFavorite] = useState(false);
+
+  // >>> this use effect worked before with connect, now checked if could work with useSelect and usedispatch
+  useEffect(() => {
+    getForecast(215854);
+    getCurrent(215854, 'Tel Aviv');
+  }, []);
+
+  const makeFavorite = (cityName) => {
+    const indexCity = favorites.indexOf(cityName);
+    console.log('index', indexCity, favorites);
+    if (indexCity > -1) {
+      setCityFavorite(false);
+      favorites.splice(indexCity, 1);
+      setFavorites(favorites);
+    } else {
+      setCityFavorite(true);
+      setFavorites([...favorites, cityName]);
+    }
+  };
+
+  useEffect(() => {
+    const indexCity = favorites.indexOf(currentCity);
+    indexCity > -1 ? setCityFavorite(true) : setCityFavorite(false);
+  }, [currentCity]);
+  // console.log('data.currentConditions', data.currentConditions);
   return (
     <div>
-      <Search>
+      <div>
         <SearchBar />
-      </Search>
+      </div>
       <CustomCard>
         {data.currentConditions.WeatherText && (
           <div>
             <div>{data.currentConditions.cityName}</div>
             <div>{data.currentConditions.WeatherText}</div>
             <div>{data.currentConditions.Temperature.Metric.Value}°</div>
-            {/* <div>{data.currentConditions.Wind.Speed.Metric.Value}</div>
-            <div>{data.currentConditions.RelativeHumidity}</div> */}
           </div>
         )}
+
         <Button
+          onClick={() => makeFavorite(data.currentConditions.cityName)}
           icon="pi pi-star-o"
-          className="p-button-rounded p-button-secondary p-button-outlined"
+          className={
+            !cityFavorite
+              ? 'p-button-rounded p-button-secondary p-button-outlined'
+              : 'p-button-rounded p-button-secondary'
+          }
         />
-        {/* <Button
-            icon="pi pi-star-o"
-            className="p-button-rounded p-button-secondary"
-          /> */}
+
         <FiveDayForecast />
       </CustomCard>
     </div>
@@ -80,6 +117,10 @@ export const WeatherPage = ({ data }) => {
 
 const mapStateToProps = (state) => ({
   data: state.data,
+  currentCity: state.data.currentConditions.cityName,
 });
 
-export default connect(mapStateToProps)(WeatherPage);
+export default connect(mapStateToProps, {
+  getWeather,
+  getCurrentConditions,
+})(WeatherPage);

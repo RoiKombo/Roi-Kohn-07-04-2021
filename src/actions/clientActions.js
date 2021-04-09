@@ -5,8 +5,8 @@ const API_KEY = '42jHPT6VXvQuFTMmkuAXRsR5TfoWlm0N'; //  >>>>>> CHANGE TO ENV VAR
 export const getAutoComplete = (query) => (dispatch) => {
   console.log('getAutoComplete', query);
   fetch(
-    `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${query}`
-    // 'te.json'
+    // `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${query}`
+    'te.json'
   )
     .then((res) => res.json())
     .then((suggestions) =>
@@ -20,8 +20,8 @@ export const getAutoComplete = (query) => (dispatch) => {
 export const getWeather = (cityKey) => (dispatch) => {
   console.log('getWeather', cityKey);
   fetch(
-    `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${API_KEY}&metric=true`
-    // 'TelAvivWeather.json'
+    // `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${API_KEY}&metric=true`
+    'TelAvivWeather.json'
   )
     .then((res) => res.json())
     .then((weeklyForecast) =>
@@ -35,8 +35,8 @@ export const getWeather = (cityKey) => (dispatch) => {
 export const getCurrentConditions = (cityKey, name) => (dispatch) => {
   console.log('getcurrent', cityKey, name);
   fetch(
-    `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${API_KEY}`
-    // 'TelAvivCurrent.json'
+    // `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${API_KEY}`
+    'TelAvivCurrent.json'
   )
     .then((res) => res.json())
     .then((currentConditions) => {
