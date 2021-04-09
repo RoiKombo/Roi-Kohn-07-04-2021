@@ -1,9 +1,15 @@
-import { GET_WEATHER, SUGGESTIONS, CURRENT_CONDITIONS } from '../actions/types';
+import {
+  GET_WEATHER,
+  SUGGESTIONS,
+  CURRENT_CONDITIONS,
+  FAVORITES_CONDITIONS,
+} from '../actions/types';
 
 const initialState = {
   suggestions: [],
   weeklyForecast: {},
   currentConditions: {},
+  favoritesConditions: [],
 };
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -21,6 +27,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         currentConditions: action.payload,
+      };
+    case FAVORITES_CONDITIONS:
+      return {
+        ...state,
+        favoritesConditions: action.payload,
       };
     default:
       return state;

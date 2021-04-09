@@ -1,4 +1,9 @@
-import { GET_WEATHER, SUGGESTIONS, CURRENT_CONDITIONS } from './types';
+import {
+  GET_WEATHER,
+  SUGGESTIONS,
+  CURRENT_CONDITIONS,
+  FAVORITES_CONDITIONS,
+} from './types';
 
 const API_KEY = '42jHPT6VXvQuFTMmkuAXRsR5TfoWlm0N'; //  >>>>>> CHANGE TO ENV VARIABLE <<<<<
 
@@ -48,6 +53,18 @@ export const getCurrentConditions = (cityKey, name) => (dispatch) => {
           cityName: name,
           key: cityKey,
         },
+      });
+    });
+};
+
+export const getFavoritesConditions = (favorites) => (dispatch) => {
+  console.log('FavoritesConditions', favorites);
+  Promise.all(favorites.map((u) => fetch('TelAvivCurrent.json')))
+    .then((responses) => Promise.all(responses.map((res) => res.json())))
+    .then((FavoritesConditions) => {
+      dispatch({
+        type: FAVORITES_CONDITIONS,
+        payload: FavoritesConditions,
       });
     });
 };
