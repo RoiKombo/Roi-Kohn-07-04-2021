@@ -5,18 +5,14 @@ import {
   FAVORITES_CONDITIONS,
 } from './types';
 
-const API_KEY = 'jXiwGd5fgeVXVG8lKaClg4D6GlAGEz8q'; //  >>>>>> CHANGE TO ENV VARIABLE <<<<<
+// > > > > > ADD API KEY HERE < < < < <
+const API_KEY = '';
+// > > > > >
 
 export const getAutoComplete = (query) => (dispatch) => {
   fetch(
-    // `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${query}`
-    'json/tSuggest.json',
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    }
+    `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${query}`
+    // 'json/tSuggest.json',
   )
     .then((res) => res.json())
     .then((suggestions) =>
@@ -30,8 +26,8 @@ export const getAutoComplete = (query) => (dispatch) => {
 
 export const getWeather = (cityKey) => (dispatch) => {
   fetch(
-    // `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${API_KEY}&metric=true`
-    'TelAvivWeather.json'
+    `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${API_KEY}&metric=true`
+    // 'TelAvivWeather.json'
   )
     .then((res) => res.json())
     .then((weeklyForecast) =>
@@ -45,8 +41,8 @@ export const getWeather = (cityKey) => (dispatch) => {
 
 export const getCurrentConditions = (cityKey, name) => (dispatch) => {
   fetch(
-    // `https://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${API_KEY}`
-    'TelAvivCurrent.json'
+    `https://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${API_KEY}`
+    // 'TelAvivCurrent.json'
   )
     .then((res) => res.json())
     .then((currentConditions) => {
@@ -67,8 +63,8 @@ export const getFavoritesConditions = (favorites) => (dispatch) => {
   Promise.all(
     favorites.map((u) =>
       fetch(
-        // `https://dataservice.accuweather.com/currentconditions/v1/${u.key}?apikey=${API_KEY}`
-        'TelAvivCurrent.json'
+        `https://dataservice.accuweather.com/currentconditions/v1/${u.key}?apikey=${API_KEY}`
+        // 'TelAvivCurrent.json'
       )
     )
   )
