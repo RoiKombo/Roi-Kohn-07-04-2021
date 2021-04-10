@@ -8,7 +8,6 @@ import {
 const API_KEY = 'jXiwGd5fgeVXVG8lKaClg4D6GlAGEz8q'; //  >>>>>> CHANGE TO ENV VARIABLE <<<<<
 
 export const getAutoComplete = (query) => (dispatch) => {
-  console.log('getAutoComplete', query);
   fetch(
     // `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${query}`
     'json/tSuggest.json',
@@ -30,7 +29,6 @@ export const getAutoComplete = (query) => (dispatch) => {
 };
 
 export const getWeather = (cityKey) => (dispatch) => {
-  console.log('getWeather', cityKey);
   fetch(
     // `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${API_KEY}&metric=true`
     'TelAvivWeather.json'
@@ -46,7 +44,6 @@ export const getWeather = (cityKey) => (dispatch) => {
 };
 
 export const getCurrentConditions = (cityKey, name) => (dispatch) => {
-  console.log('getcurrent', cityKey, name);
   fetch(
     // `https://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${API_KEY}`
     'TelAvivCurrent.json'
@@ -67,7 +64,6 @@ export const getCurrentConditions = (cityKey, name) => (dispatch) => {
 };
 
 export const getFavoritesConditions = (favorites) => (dispatch) => {
-  console.log('FavoritesConditions', favorites);
   Promise.all(
     favorites.map((u) =>
       fetch(

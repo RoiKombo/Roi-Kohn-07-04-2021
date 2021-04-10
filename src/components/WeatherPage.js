@@ -27,26 +27,24 @@ const CustomCard = Styled.div`
     padding: 23px;
     flex-grow: 1;
     margin: auto;
-    
-    @media (max-width: 400px){
-      width: 100%;
-    }
+      @media (max-width: 400px){
+        width: 100%;
+      }
 `;
 const TopFlex = Styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;   
 `;
-
 const DisplayedCity = Styled.div`
   font-size: var(--heading-3);
   font-weight: 400;
 `;
 const DisplayedCityConditions = Styled.div`
-font-size: var(--heading-3);
+    font-size: var(--heading-3);
 `;
 const SelectedConditions = Styled.div`
-  text-align: center;
+    text-align: center;
 `;
 const Devider = Styled.div`
     border-top: 1px solid #eee;
@@ -59,11 +57,8 @@ const WeatherPage = ({
   getCurrentConditions: getCurrent,
   currentCity,
 }) => {
-  console.log('current', currentCity);
   const [favorites, setFavorites] = useLocalStorage('favorites', []);
   const [cityFavorite, setCityFavorite] = useState(false);
-
-  // default city - tel aviv
 
   useEffect(() => {
     if (currentCity === undefined) {
@@ -86,7 +81,6 @@ const WeatherPage = ({
             if (item.cityName === cityName) return item;
           })
         : [];
-    console.log('index', city, favorites, cityName, key);
     if (city.length > 0) {
       // remove favorite city from local storage
       setCityFavorite(false);
@@ -100,7 +94,6 @@ const WeatherPage = ({
     } else {
       // add favorite city to local storage
       setCityFavorite(true);
-      console.log('set fav', cityName, key);
       const favs = favorites.length > 0 ? favorites : [];
       setFavorites([...favs, { cityName, key }]);
     }

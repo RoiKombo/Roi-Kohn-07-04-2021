@@ -19,6 +19,7 @@ body {
   font-family: "Montserrat";
   margin: 0;
   --black: #495057;
+  --yellow: #fbc02d;
 }
 
 p {

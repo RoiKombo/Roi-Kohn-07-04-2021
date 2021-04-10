@@ -1,6 +1,5 @@
 import React from 'react';
 import Styled from 'styled-components';
-import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom';
 
 const TopFlex = Styled.div`
@@ -18,10 +17,9 @@ const NavBar = Styled.div`
 `;
 const NavBtns = Styled.div`
     justify-content: flex-end;
-    @media (max-width: 400px){
-      display: flex;
-    }
-  
+      @media (max-width: 400px){
+        display: flex;
+      }
 `;
 const NavTxt = Styled.div`
     display:flex;
@@ -30,12 +28,11 @@ const NavTxt = Styled.div`
     font-size: var(--heading-2);
     font-weight:400;
     padding: 1rem;
-    @media (max-width: 400px){
-      font-size: var(--heading-3);
-      padding: 1rem;
-    }
+      @media (max-width: 400px){
+        font-size: var(--heading-3);
+        padding: 1rem;
+      }
 `;
-
 const MyBtn = Styled.div`
   display:inline-block;
   padding: 0.5rem 1rem;
@@ -43,21 +40,19 @@ const MyBtn = Styled.div`
   background-color:#FBC02D;
   border-radius: 5px;
   text-align: center;
-  @media (max-width: 400px){
-    display:inline-block;
-    padding: 0.2rem 0.5rem;
-    font-size: var(--heading-4);
-  }
+    @media (max-width: 400px){
+      display:inline-block;
+      padding: 0.2rem 0.5rem;
+      font-size: var(--heading-4);
+    }
 `;
 const MyLink = Styled(Link)`
   text-decoration: none;
-  color: var(--yellow);
-
-  &:focus, &:hover, &:visited, &:link, &:active {
-      text-decoration: none;
-  }
-  
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
 `;
+
 export default function Header() {
   return (
     <NavBar>

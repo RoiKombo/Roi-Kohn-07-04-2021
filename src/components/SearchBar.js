@@ -25,16 +25,13 @@ const SearchBar = ({
   const { suggestions = [] } = data;
 
   const searchCity = () => {
-    console.log('inputCity', inputCity);
     inputCity !== undefined && getCities(inputCity);
   };
   // getWeather & getCurrent pass key to api
   useEffect(() => {
-    console.log('inputCity', inputCity);
     const checkCityName = suggestions.filter(
       (city) => city.LocalizedName === inputCity.value
     );
-    console.log('checkCityName', checkCityName);
     checkCityName.length > 0 && getForecast(checkCityName[0].Key);
     checkCityName.length > 0 &&
       getCurrent(checkCityName[0].Key, checkCityName[0].LocalizedName);
@@ -44,13 +41,6 @@ const SearchBar = ({
     label: city.LocalizedName,
     value: city.LocalizedName,
   }));
-
-  const checkEnglishInput = (value) => {
-    const englishRegex = new RegExp(/(^$|^[a-zA-Z ]+$)/);
-    englishRegex.test(value)
-      ? setinputCity(value)
-      : console.log('search accepts english letters only');
-  };
 
   return (
     <Search>

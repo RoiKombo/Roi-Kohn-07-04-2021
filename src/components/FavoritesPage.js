@@ -17,31 +17,27 @@ const FavCity = Styled.div`
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     text-align: center;
-    
-    @media (max-width: 400px){
-        display:flex;
-        justify-content:space-between;
-
+      @media (max-width: 400px){
+          display:flex;
+          justify-content:space-between;
     }
-    :hover {
-        box-shadow: 0 14px 18px rgba(0,0,0,0.15), 0 5px 5px rgba(0,0,0,0.12);
-        border-radius: 5px;
-     @media (max-width: 400px){
-        display:flex;
-        justify-content:space-between;
-
+      :hover {
+          box-shadow: 0 14px 18px rgba(0,0,0,0.15), 0 5px 5px rgba(0,0,0,0.12);
+          border-radius: 5px;
+      @media (max-width: 400px){
+          display:flex;
+          justify-content:space-between;
     }
 }
-
 `;
 const Favorites = Styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    @media (max-width: 400px){
-        display: flex;
-        flex-direction: column;
-    }
+      @media (max-width: 400px){
+          display: flex;
+          flex-direction: column;
+      }
 `;
 const Heading = Styled.div`
     text-align: center;
@@ -57,7 +53,6 @@ const FavoritesPage = ({
   getCurrentConditions: getCurrent,
 }) => {
   const [favorites, setFavorites] = useLocalStorage('favorites');
-  console.log('favorites', favorites);
   const history = useHistory();
 
   useEffect(() => {
@@ -70,12 +65,7 @@ const FavoritesPage = ({
     const cityKebab = noStart.slice(0, index);
     return cityKebab.replace('-', ' ');
   };
-  console.log(
-    'convertCityName',
-    convertCityName(
-      'http://m.accuweather.com/en/il/tel-aviv/215854/current-weather/215854?lang=en-us'
-    )
-  );
+
   const goToMain = (url) => {
     const noStart = url.slice(63);
     const index = noStart.indexOf('?');
