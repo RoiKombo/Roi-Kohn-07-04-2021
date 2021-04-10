@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Styled from 'styled-components';
 import moment from 'moment';
+import { convertTempUnit } from '../utils';
 
 const DailyForeCast = Styled.div`
     padding: 1.2rem;
@@ -28,14 +29,18 @@ const Day = Styled.div`
     font-weight: 400;
 `;
 
-const FiveDayForecast = ({ data }) => (
+const FiveDayForecast = ({ data, fahrenheit }) => (
   <Dailys>
     {data?.weeklyForecast?.DailyForecasts?.map((forecast, index) => (
       <DailyForeCast key={index}>
         <Day>{moment(forecast.Date).format('dddd')}</Day>
         <p>{forecast.Day.IconPhrase}</p>
-        <p>{forecast.Temperature.Minimum.Value}°</p>
-        <p>{forecast.Temperature.Maximum.Value}°</p>
+        <p>
+          {convertTempUnit(fahrenheit, forecast.Temperature.Minimum.Value)}°
+        </p>
+        <p>
+          {convertTempUnit(fahrenheit, forecast.Temperature.Maximum.Value)}°
+        </p>
       </DailyForeCast>
     ))}
   </Dailys>

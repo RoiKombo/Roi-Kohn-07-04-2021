@@ -6,10 +6,12 @@ import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
 import { Button } from 'primereact/button';
 import { connect } from 'react-redux';
+import { SelectButton } from 'primereact/selectbutton';
 import SearchBar from './SearchBar';
 import FiveDayForecast from './FiveDayForecast';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { getWeather, getCurrentConditions } from '../actions/clientActions';
+import { convertTempUnit } from '../utils';
 
 const Search = Styled.div`
     display: flex;
@@ -50,6 +52,12 @@ const Devider = Styled.div`
     border-top: 1px solid #eee;
     margin: 1.5rem 0rem 1.5rem 0rem;
 `;
+const SideBySide = Styled.div`
+  display: flex;
+`;
+const MyButton = Styled(Button)`
+  margin-left: 15px;
+`;
 
 const WeatherPage = ({
   data,
@@ -59,6 +67,9 @@ const WeatherPage = ({
 }) => {
   const [favorites, setFavorites] = useLocalStorage('favorites', []);
   const [cityFavorite, setCityFavorite] = useState(false);
+
+  const [unit, setUnit] = useState('°C');
+  const unitOptions = ['°C', '°F'];
 
   useEffect(() => {
     if (currentCity === undefined) {
@@ -109,12 +120,6 @@ const WeatherPage = ({
     city.length > 0 ? setCityFavorite(true) : setCityFavorite(false);
   }, [currentCity]);
 
-  const convertTempUnit = (Fahrenheit, value) => {
-    if (Fahrenheit) {
-      const matric = Math.floor(value / 5) * 9 + 32;
-      return matric;
-    }
-  };
   return (
     <div>
       <Search>
@@ -130,25 +135,32 @@ const WeatherPage = ({
               </DisplayedCityConditions>
               <DisplayedCityConditions>
                 {convertTempUnit(
-                  true,
+                  unit === unitOptions[1],
                   data.currentConditions.Temperature.Metric.Value
                 )}
                 °
               </DisplayedCityConditions>
             </SelectedConditions>
-            <Button
-              onClick={() => makeFavorite(data.currentConditions)}
-              icon="pi pi-star-o"
-              className={
-                !cityFavorite
-                  ? 'p-button-rounded p-button-secondary p-button-outlined'
-                  : 'p-button-rounded p-button-secondary'
-              }
-            />
+            <SideBySide>
+              <SelectButton
+                value={unit}
+                options={unitOptions}
+                onChange={(e) => setUnit(e.value)}
+              />
+              <MyButton
+                onClick={() => makeFavorite(data.currentConditions)}
+                icon="pi pi-star-o"
+                className={
+                  !cityFavorite
+                    ? 'p-button-rounded p-button-secondary p-button-outlined'
+                    : 'p-button-rounded p-button-secondary'
+                }
+              />
+            </SideBySide>
           </TopFlex>
         )}
         <Devider />
-        <FiveDayForecast />
+        <FiveDayForecast fahrenheit={unit === unitOptions[1]} />
       </CustomCard>
     </div>
   );

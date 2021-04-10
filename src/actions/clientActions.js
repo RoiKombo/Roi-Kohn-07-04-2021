@@ -12,7 +12,7 @@ const API_KEY = '';
 export const getAutoComplete = (query) => (dispatch) => {
   fetch(
     `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${query}`
-    // 'json/tSuggest.json',
+    // 'json/tSuggest.json'
   )
     .then((res) => res.json())
     .then((suggestions) =>
@@ -20,8 +20,8 @@ export const getAutoComplete = (query) => (dispatch) => {
         type: SUGGESTIONS,
         payload: suggestions,
       })
-    );
-  // .catch((err) => console.log('faild to get autoComplete API'));
+    )
+    .catch((err) => console.log('faild to get autoComplete API'));
 };
 
 export const getWeather = (cityKey) => (dispatch) => {
@@ -59,7 +59,7 @@ export const getCurrentConditions = (cityKey, name) => (dispatch) => {
     .catch((err) => console.log('faild to get current conditions'));
 };
 
-export const getFavoritesConditions = (favorites) => (dispatch) => {
+export const getFavoritesConditions = (favorites = []) => (dispatch) => {
   Promise.all(
     favorites.map((u) =>
       fetch(

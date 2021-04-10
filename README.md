@@ -12,7 +12,7 @@ add accuweather api key to clientActions.js (API_KEY)
 
 ####
 
-deployed version can be found on http://RoiKombo.github.io/Roi-Kohn-07-04-2021
+deployed version can be found on http://RoiKombo.github.io/Roi-Kohn-07-04-2021/
 
 ####
 
