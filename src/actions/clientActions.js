@@ -5,13 +5,19 @@ import {
   FAVORITES_CONDITIONS,
 } from './types';
 
-const API_KEY = '42jHPT6VXvQuFTMmkuAXRsR5TfoWlm0N'; //  >>>>>> CHANGE TO ENV VARIABLE <<<<<
+const API_KEY = 'jXiwGd5fgeVXVG8lKaClg4D6GlAGEz8q'; //  >>>>>> CHANGE TO ENV VARIABLE <<<<<
 
 export const getAutoComplete = (query) => (dispatch) => {
   console.log('getAutoComplete', query);
   fetch(
-    // `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${query}`
-    'te.json'
+    // `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${query}`
+    'json/tSuggest.json',
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }
   )
     .then((res) => res.json())
     .then((suggestions) =>
@@ -19,14 +25,14 @@ export const getAutoComplete = (query) => (dispatch) => {
         type: SUGGESTIONS,
         payload: suggestions,
       })
-    )
-    .catch((err) => console.log('faild to get autoComplete API'));
+    );
+  // .catch((err) => console.log('faild to get autoComplete API'));
 };
 
 export const getWeather = (cityKey) => (dispatch) => {
   console.log('getWeather', cityKey);
   fetch(
-    // `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${API_KEY}&metric=true`
+    // `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${API_KEY}&metric=true`
     'TelAvivWeather.json'
   )
     .then((res) => res.json())
@@ -42,7 +48,7 @@ export const getWeather = (cityKey) => (dispatch) => {
 export const getCurrentConditions = (cityKey, name) => (dispatch) => {
   console.log('getcurrent', cityKey, name);
   fetch(
-    // `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${API_KEY}`
+    // `https://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${API_KEY}`
     'TelAvivCurrent.json'
   )
     .then((res) => res.json())
@@ -62,7 +68,14 @@ export const getCurrentConditions = (cityKey, name) => (dispatch) => {
 
 export const getFavoritesConditions = (favorites) => (dispatch) => {
   console.log('FavoritesConditions', favorites);
-  Promise.all(favorites.map((u) => fetch('TelAvivCurrent.json')))
+  Promise.all(
+    favorites.map((u) =>
+      fetch(
+        // `https://dataservice.accuweather.com/currentconditions/v1/${u.key}?apikey=${API_KEY}`
+        'TelAvivCurrent.json'
+      )
+    )
+  )
     .then((responses) => Promise.all(responses.map((res) => res.json())))
     .then((FavoritesConditions) => {
       dispatch({

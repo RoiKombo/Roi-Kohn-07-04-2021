@@ -28,7 +28,7 @@ const SearchBar = ({
     console.log('inputCity', inputCity);
     inputCity !== undefined && getCities(inputCity);
   };
-
+  // getWeather & getCurrent pass key to api
   useEffect(() => {
     console.log('inputCity', inputCity);
     const checkCityName = suggestions.filter(
@@ -58,7 +58,7 @@ const SearchBar = ({
         value={inputCity}
         suggestions={displayCities}
         field="value"
-        onChange={(e) => checkEnglishInput(e.value)}
+        onChange={(e) => setinputCity(e.value)}
         completeMethod={searchCity}
         type="a-z"
       />

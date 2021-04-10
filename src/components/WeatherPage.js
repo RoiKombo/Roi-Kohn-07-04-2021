@@ -6,7 +6,6 @@ import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
 import { Button } from 'primereact/button';
 import { connect } from 'react-redux';
-
 import SearchBar from './SearchBar';
 import FiveDayForecast from './FiveDayForecast';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -21,35 +20,37 @@ const CustomCard = Styled.div`
     display: flex;
     flex-direction: column;
     width: 80%;background: #ffffff;
-    color: #495057;
+    color: var(--black);
     box-shadow:  3px 3px 17px #e1e1e3, -3px -3px 17px #ffffff;
     border-radius: 15px;
-    margin: 0 0 30px 10px;
+    margin: 10px 0 0 0;
     padding: 23px;
     flex-grow: 1;
     margin: auto;
+    
+    @media (max-width: 400px){
+      width: 100%;
+    }
 `;
 const TopFlex = Styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;   
 `;
-const FavBtn = Styled.button`
-     display: flex;
-    justify-content: flex-end;
-`;
-const CityImg = Styled.img`
-    width: 100px;
-    height: 100px;
-`;
-const CityDetails = Styled.div`
-    display: flex;
-    justify-content: flex-start;
-`;
 
-const TodayWeather = Styled.h1`
-    display: flex;
-    justify-content: center;
+const DisplayedCity = Styled.div`
+  font-size: var(--heading-3);
+  font-weight: 400;
+`;
+const DisplayedCityConditions = Styled.div`
+font-size: var(--heading-3);
+`;
+const SelectedConditions = Styled.div`
+  text-align: center;
+`;
+const Devider = Styled.div`
+    border-top: 1px solid #eee;
+    margin: 1.5rem 0rem 1.5rem 0rem;
 `;
 
 const WeatherPage = ({
@@ -62,11 +63,21 @@ const WeatherPage = ({
   const [favorites, setFavorites] = useLocalStorage('favorites', []);
   const [cityFavorite, setCityFavorite] = useState(false);
 
-  // >>> this use effect worked before with connect, now checked if could work with useSelect and usedispatch
+  // default city - tel aviv
+
   useEffect(() => {
-    getForecast(215854);
-    getCurrent(215854, 'Tel Aviv');
-  }, []);
+    if (currentCity === undefined) {
+      if (navigator.geolocation) {
+        getForecast(215854);
+        getCurrent(215854, 'Tel Aviv');
+      } else {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude } = position.coords;
+          const { longitude } = position.coords;
+        });
+      }
+    }
+  }, [currentCity]);
 
   const makeFavorite = ({ cityName, key }) => {
     const city =
@@ -104,31 +115,46 @@ const WeatherPage = ({
         : [];
     city.length > 0 ? setCityFavorite(true) : setCityFavorite(false);
   }, [currentCity]);
-  // console.log('data.currentConditions', data.currentConditions);
+
+  const convertTempUnit = (Fahrenheit, value) => {
+    if (Fahrenheit) {
+      const matric = Math.floor(value / 5) * 9 + 32;
+      return matric;
+    }
+  };
   return (
     <div>
-      <div>
+      <Search>
         <SearchBar />
-      </div>
+      </Search>
       <CustomCard>
         {data.currentConditions.WeatherText && (
-          <div>
-            <div>{data.currentConditions.cityName}</div>
-            <div>{data.currentConditions.WeatherText}</div>
-            <div>{data.currentConditions.Temperature.Metric.Value}°</div>
-          </div>
+          <TopFlex>
+            <DisplayedCity>{data.currentConditions.cityName}</DisplayedCity>
+            <SelectedConditions>
+              <DisplayedCityConditions>
+                {data.currentConditions.WeatherText}
+              </DisplayedCityConditions>
+              <DisplayedCityConditions>
+                {convertTempUnit(
+                  true,
+                  data.currentConditions.Temperature.Metric.Value
+                )}
+                °
+              </DisplayedCityConditions>
+            </SelectedConditions>
+            <Button
+              onClick={() => makeFavorite(data.currentConditions)}
+              icon="pi pi-star-o"
+              className={
+                !cityFavorite
+                  ? 'p-button-rounded p-button-secondary p-button-outlined'
+                  : 'p-button-rounded p-button-secondary'
+              }
+            />
+          </TopFlex>
         )}
-
-        <Button
-          onClick={() => makeFavorite(data.currentConditions)}
-          icon="pi pi-star-o"
-          className={
-            !cityFavorite
-              ? 'p-button-rounded p-button-secondary p-button-outlined'
-              : 'p-button-rounded p-button-secondary'
-          }
-        />
-
+        <Devider />
         <FiveDayForecast />
       </CustomCard>
     </div>

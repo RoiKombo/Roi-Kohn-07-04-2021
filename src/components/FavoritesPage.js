@@ -11,16 +11,45 @@ import {
 } from '../actions/clientActions';
 
 const FavCity = Styled.div`
-    
     padding: 1.2rem;
-    background-color: #d5ecc2;
-    margin: 5px
+    margin: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    text-align: center;
+    
+    @media (max-width: 400px){
+        display:flex;
+        justify-content:space-between;
+
+    }
+    :hover {
+        box-shadow: 0 14px 18px rgba(0,0,0,0.15), 0 5px 5px rgba(0,0,0,0.12);
+        border-radius: 5px;
+     @media (max-width: 400px){
+        display:flex;
+        justify-content:space-between;
+
+    }
+}
+
 `;
 const Favorites = Styled.div`
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    @media (max-width: 400px){
+        display: flex;
+        flex-direction: column;
+    }
 `;
-
+const Heading = Styled.div`
+    text-align: center;
+    font-size:var(--heading-2)
+`;
+const CityName = Styled.div`
+    font-weight: 400;
+`;
 const FavoritesPage = ({
   getFavoritesConditions: getFavConditions,
   favoritesConditions,
@@ -55,15 +84,17 @@ const FavoritesPage = ({
     getCurrent(cityKey, convertCityName(url));
     history.push('/');
   };
+
   return (
     <div>
-      <h1>
-        This are my favorites, there are many favorites but these ones are mine
-      </h1>
+      <Heading>
+        These are my favorites, There are many favorites like it but these are
+        mine
+      </Heading>
       <Favorites>
         {favoritesConditions.map((item, index) => (
           <FavCity onClick={() => goToMain(item[0].MobileLink)} key={index}>
-            <div>{convertCityName(item[0].MobileLink)}</div>
+            <CityName>{convertCityName(item[0].MobileLink)}</CityName>
             <div>{item[0].WeatherText}</div>
             <div>{item[0].Temperature.Metric.Value}°</div>
           </FavCity>
